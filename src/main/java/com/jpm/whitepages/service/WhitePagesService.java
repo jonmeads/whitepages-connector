@@ -7,7 +7,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import com.github.javafaker.Faker;
 import com.jpm.whitepages.exceptions.WhitePagesFailureException;
@@ -15,7 +15,7 @@ import com.jpm.whitepages.exceptions.WhitePagesTimeoutException;
 import com.jpm.whitepages.model.WhitePagesRequest;
 import com.jpm.whitepages.model.WhitePagesResponse;
 
-@Component
+@Service
 public class WhitePagesService {
 
 	private final ExecutorService executor;
@@ -24,6 +24,10 @@ public class WhitePagesService {
 		this.executor = Executors.newSingleThreadExecutor();
 	}
 
+	/*
+	 * All requests go through the single thread executor to limit the
+	 * requests to the external white pages service to be sequential 
+	 */
 	public List<WhitePagesResponse> requestWhitePages(WhitePagesRequest request) {
 		List<WhitePagesResponse> response = new ArrayList<>();
 
@@ -42,8 +46,14 @@ public class WhitePagesService {
 		return response;
 	}
 
+	/*
+	 * This would be the call to the external white pages service
+	 * but for this example dummying up some response date using
+	 * the faker library
+	 * 
+	 */
 	protected List<WhitePagesResponse> whitePagesConnector(WhitePagesRequest request) throws InterruptedException {
-		// send request and obtain response
+		
 		List<WhitePagesResponse> response = new ArrayList<>();
 
 		Faker faker = new Faker();

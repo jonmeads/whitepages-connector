@@ -4,8 +4,10 @@ import com.jpm.whitepages.model.WhitePagesRequest;
 
 public class WhitePagesFailureException extends RuntimeException {
 
-    public WhitePagesFailureException(WhitePagesRequest request) {
-        super("Failure while requesting : " + request);
+	private static final long serialVersionUID = -5399577989185676270L;
+
+	public WhitePagesFailureException(WhitePagesRequest request) {
+        super("Failure while requesting: " + request);
     }
 }
 
